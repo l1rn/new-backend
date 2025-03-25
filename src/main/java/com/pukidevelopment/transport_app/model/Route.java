@@ -1,37 +1,36 @@
 package com.pukidevelopment.transport_app.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import java.text.ParseException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 
 @Entity
 @Data
+@Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Routes {
-
+@Table(name = "routes")
+public class Route {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "route_id")
     private int id;
 
-    private String route_from;
+    private String routeFrom;
 
-    private String route_to;
+    private String routeTo;
 
     private String transport;
 
-    private LocalDateTime arrival_time;
+    private LocalDateTime arrivalTime;
 
-    private LocalDateTime departure_time;
+    private LocalDateTime departureTime;
 
-    private int available_seats;
+    private int availableSeats;
 
     private double price;
 

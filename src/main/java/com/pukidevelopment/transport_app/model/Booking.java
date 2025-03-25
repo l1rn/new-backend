@@ -1,27 +1,31 @@
 package com.pukidevelopment.transport_app.model;
 
 import com.pukidevelopment.transport_app.enums.BookingStatus;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Data
+@Builder
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Bookings {
+@Table(name = "booking")
+public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    private int route_id;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "route_id")
+    private Route route_id;
 
-    private int user_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user_id;
 
+    @Enumerated(EnumType.STRING)
     private BookingStatus status;
 }
