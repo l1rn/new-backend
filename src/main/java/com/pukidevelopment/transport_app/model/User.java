@@ -17,6 +17,10 @@ public class User {
     @Column(name = "user_id")
     private int id;
 
+    private String chatId;
+
+    private String telegramId;
+
     @Column(name = "phone_number")
     private String phoneNumber;
 }
