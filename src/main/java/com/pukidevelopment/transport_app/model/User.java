@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Data
 @Builder
 @Getter
 @Setter
@@ -17,8 +16,9 @@ public class User {
     @Column(name = "user_id")
     private int id;
 
-    private String chatId;
+    private Long chatId;
 
+    @Column(name = "telegram_id")
     private String telegramId;
 
     @Column(name = "phone_number")

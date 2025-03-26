@@ -1,11 +1,13 @@
 package com.pukidevelopment.transport_app.controlles;
 
-import com.pukidevelopment.transport_app.model.User;
+import com.pukidevelopment.transport_app.dto.users.DeleteUserRequest;
+import com.pukidevelopment.transport_app.dto.users.RegisterRequest;
 import com.pukidevelopment.transport_app.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,12 +18,10 @@ public class UserControllers {
     private final UserService userService;
 
     @PostMapping("/add")
-    public ResponseEntity<?> addUser(String telegram_id){
+    public ResponseEntity<?> signUp(@RequestBody RegisterRequest request){
         try{
-            if(userService.existsByTelegramId(telegram_id)){
-                throw new RuntimeException("Пользователь уже зарегистрирован");
-            }
-            return ResponseEntity.ok(userService.addUser(telegram_id));
+
+            return ResponseEntity.status(HttpStatus.CREATED).body(userService.addUser(request));
         }
         catch (RuntimeException e){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
@@ -29,10 +29,10 @@ public class UserControllers {
     }
 
     @PostMapping("/delete")
-    public ResponseEntity<?> deleteUser(String telegram_id){
+    public ResponseEntity<?> deleteUser(@RequestBody DeleteUserRequest request){
         try {
-            if(userService.existsByTelegramId(telegram_id)){
-                userService.deleteUser(telegram_id);
+            if(userService.existsByTelegramId(request.getTelegramId())){
+                userService.deleteUser(request);
                 return ResponseEntity.ok(HttpStatus.NO_CONTENT);
             }
             else {

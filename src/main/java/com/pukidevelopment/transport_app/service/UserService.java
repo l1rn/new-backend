@@ -1,5 +1,7 @@
 package com.pukidevelopment.transport_app.service;
 
+import com.pukidevelopment.transport_app.dto.users.DeleteUserRequest;
+import com.pukidevelopment.transport_app.dto.users.RegisterRequest;
 import com.pukidevelopment.transport_app.model.User;
 import com.pukidevelopment.transport_app.repo.UserRepo;
 import jakarta.transaction.Transactional;
@@ -11,20 +13,35 @@ import org.springframework.stereotype.Service;
 public class UserService {
     private final UserRepo userRepo;
 
-    public boolean existsByTelegramId(String telegram_id){
-        return userRepo.findByTelegramId(telegram_id).isPresent();
-    }
-
-
-    public User addUser(String telegram_id){
-        User user = userRepo.findByTelegramId(telegram_id)
-                .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+    public User save(User user){
         return userRepo.save(user);
     }
 
+    public boolean existsByTelegramId(String telegramId) {
+        return userRepo.findByTelegramId(telegramId).isPresent();
+    }
+
     @Transactional
-    public void deleteUser(String telegram_id){
-        User user = userRepo.findByTelegramId(telegram_id)
+    public User addUser(RegisterRequest request){
+        if(userRepo.existsByPhoneNumber(request.getPhoneNumber())){
+            throw new RuntimeException("Пользователь с таким номер телефона уже есть");
+        }
+
+        String telegramId = request.getTelegramId();
+        System.out.println(telegramId);
+
+        User user = User.builder()
+                .telegramId(request.getTelegramId())
+                .chatId(request.getChatId())
+                .phoneNumber(request.getPhoneNumber())
+                .build();
+
+        return save(user);
+    }
+
+    @Transactional
+    public void deleteUser(DeleteUserRequest request){
+        User user = userRepo.findByTelegramId(request.getTelegramId())
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
         userRepo.delete(user);
     }

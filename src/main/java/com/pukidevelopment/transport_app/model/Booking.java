@@ -16,16 +16,18 @@ public class Booking {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "booking_id")
     private int id;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "route_id")
-    private Route route_id;
+    private Route route;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user_id;
+    private User user;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "booking_status")
     private BookingStatus status;
 }

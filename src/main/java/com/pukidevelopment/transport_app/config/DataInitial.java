@@ -18,13 +18,13 @@ public class DataInitial {
     private final UserRepo userRepo;
     private final BookingRepo bookingRepo;
     private final RoutesRepo routesRepo;
-    public void createUserIfNotExists(String phone_number, String chat_id,
+    public void createUserIfNotExists(String phone_number, Long chat_id,
                                       String telegram_id){
         if(!userRepo.existsByPhoneNumber(phone_number)){
             User user = User.builder()
+                    .phoneNumber(phone_number)
                     .chatId(chat_id)
                     .telegramId(telegram_id)
-                    .phoneNumber(phone_number)
                     .build();
             userRepo.save(user);
         }
@@ -79,7 +79,8 @@ public class DataInitial {
     }
     @EventListener(ApplicationReadyEvent.class)
     public void initFirstUsers(){
-        createUserIfNotExists("7999111222", "123", "fawf12");
-        createUserIfNotExists("4444444444", "kuku", "uuu23");
+        createUserIfNotExists("2222", 4444L, "2333");
+        createUserIfNotExists("333", 4455544L, "25235225");
+
     }
 }

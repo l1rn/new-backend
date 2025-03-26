@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BookingRepo extends JpaRepository<Booking, Integer> {
-    Booking findById(int id);
+    boolean findStatusById(Integer id);
 }
