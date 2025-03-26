@@ -5,36 +5,31 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
-import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
 import java.util.List;
 
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
     private static final Logger logger = LoggerFactory.getLogger(TelegramBot.class);
 
-    @Value("${telegram.bot.token}")
-    private String botToken;
-
     @Value("${telegram.bot.username}")
-    private String botUsername;
-
-    public TelegramBot() {
-        logger.info("TelegramBot initialized");
-    }
-
-    @Override
-    public String getBotToken() {
-        return botToken;
-    }
+    private String username;
 
     @Override
     public String getBotUsername() {
-        return botUsername;
+        System.out.println(username);
+        return username;
+    }
+
+    public TelegramBot(@Value("${telegram.bot.token}") String botToken) {
+        super(botToken);
+        logger.info("TelegramBot initialized");
     }
 
     @Override
