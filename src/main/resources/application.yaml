@@ -13,4 +13,9 @@ spring:
     hibernate:
       ddl-auto: update
 server:
-  port: 8080
+  port: 5252
+
+telegram:
+  bot:
+    token: "7866843638:AAGOI19M3acDL3VY1L2JNsOfSylsjjjAF20"
+    username: "@ololo_travel_bot"
