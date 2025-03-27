@@ -3,28 +3,26 @@ package com.pukidevelopment.transport_app.model;
 import com.pukidevelopment.transport_app.enums.BookingStatus;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-@Entity
+@Document(collation = "booking")
 @Data
 @Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "booking")
 public class Booking {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "booking_id")
-    private int id;
+    private String id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "route_id")
+    @DBRef
     private Route route;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @DBRef
     private User user;
 
     @Enumerated(EnumType.STRING)

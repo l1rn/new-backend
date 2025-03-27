@@ -16,7 +16,8 @@ public class RoutesService {
         return routesRepo.findAll();
     }
 
-    public Route findById(int id){
-        return routesRepo.findById(id);
+    public Route findById(String routeId){
+        return routesRepo.findById(routeId)
+                .orElseThrow(() -> new RuntimeException("Маршрут не найден"));
     }
 }

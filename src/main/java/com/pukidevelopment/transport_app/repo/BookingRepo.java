@@ -1,10 +1,8 @@
 package com.pukidevelopment.transport_app.repo;
 
 import com.pukidevelopment.transport_app.model.Booking;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-@Repository
-public interface BookingRepo extends JpaRepository<Booking, Integer> {
-    boolean findStatusById(Integer id);
+public interface BookingRepo extends MongoRepository<Booking, String> {
+    boolean findStatusById(String id);
 }

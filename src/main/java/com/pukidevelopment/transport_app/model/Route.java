@@ -2,23 +2,21 @@ package com.pukidevelopment.transport_app.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
-@Entity
-@Data
+@Document(collation = "routes")
 @Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "routes")
 public class Route {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "route_id")
-    private int id;
+    private String id;
 
     private String routeFrom;
 

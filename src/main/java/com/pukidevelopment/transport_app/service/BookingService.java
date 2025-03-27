@@ -28,8 +28,9 @@ public class BookingService {
     }
 
     @Transactional
-    public Booking addBooking(int userId, AddBookingRequest request){
-        Route route = routesRepo.findById(request.getRouteId());
+    public Booking addBooking(String userId, AddBookingRequest request){
+        Route route = routesRepo.findById(request.getRouteId())
+                .orElseThrow(() -> new RuntimeException("Маршрут не найден"));
         if(route != null){
             route.setAvailableSeats(route.getAvailableSeats() - 1);
             routesRepo.save(route);
@@ -48,7 +49,7 @@ public class BookingService {
     }
 
     @Transactional
-    public boolean cancelBooking(int bookingId, DeleteBookingRequest request) throws AccessDeniedException {
+    public boolean cancelBooking(String bookingId, DeleteBookingRequest request) throws AccessDeniedException {
 
         Booking currentBooking = bookingRepo.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Маршрут не найден"));
@@ -59,7 +60,7 @@ public class BookingService {
         User user = userRepo.findById(request.getUserId())
                 .orElseThrow(() -> new RuntimeException("Пользователь не найден"));
 
-        if (currentBooking.getUser().getId() != request.getUserId()) {
+        if (!currentBooking.getUser().getId().equals(request.getUserId())) {
             throw new AccessDeniedException("У вас нет прав для отмены бронирования");
         }
 
@@ -77,7 +78,7 @@ public class BookingService {
     }
 
     @Transactional
-    public Booking confirmBooking(int bookingId, ConfirmBookingRequest request){
+    public Booking confirmBooking(String bookingId, ConfirmBookingRequest request){
 
         Booking booking = bookingRepo.findById(bookingId)
                 .orElseThrow(() -> new RuntimeException("Бронирование не найдено"));

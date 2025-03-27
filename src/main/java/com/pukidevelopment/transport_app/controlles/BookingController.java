@@ -18,7 +18,7 @@ public class BookingController {
     private final BookingService bookingService;
 
     @PostMapping("/add/{id}")
-    public ResponseEntity<?> createBooking(@PathVariable(name = "id") int id,
+    public ResponseEntity<?> createBooking(@PathVariable(name = "id") String id,
                                            @RequestBody AddBookingRequest request)
     {
         try {
@@ -30,7 +30,7 @@ public class BookingController {
 
     @PatchMapping("/cancel/{id}")
     public ResponseEntity<?> cancelBooking(
-            @PathVariable(name = "id") int id,
+            @PathVariable(name = "id") String id,
             @RequestBody DeleteBookingRequest request)
             throws AccessDeniedException
     {
@@ -44,7 +44,7 @@ public class BookingController {
     }
 
     @PatchMapping("/confirm/{id}")
-    public ResponseEntity<?> confirmBooking(@PathVariable(name = "id") int id,
+    public ResponseEntity<?> confirmBooking(@PathVariable(name = "id") String id,
                                             @RequestBody ConfirmBookingRequest request)
     {
         try {

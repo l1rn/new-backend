@@ -34,3 +34,4 @@ build/
 
 ### project ###
 /data
+/src/main/resources/application.yaml

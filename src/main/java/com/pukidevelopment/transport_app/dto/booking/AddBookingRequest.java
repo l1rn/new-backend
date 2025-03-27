@@ -5,5 +5,5 @@ import lombok.Data;
 
 @Data
 public class AddBookingRequest {
-    private int routeId;
+    private String routeId;
 }

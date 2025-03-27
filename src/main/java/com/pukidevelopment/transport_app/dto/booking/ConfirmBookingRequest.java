@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class ConfirmBookingRequest {
-    private int userId;
+    private String userId;
 }
